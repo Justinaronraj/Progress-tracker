@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container{
+            background-color: rgb(222, 158, 39);
+        }
+
+        .pages{
+            display: flex;
+            padding: 30px;
+            height: 200px;
+            justify-content: center;
+        }
+        .p{
+            background-color: rgba(255, 253, 253, 0.684);
+            width: 100px;
+            border-radius: 100%;
+            flex: 1;
+            margin: 50px;
+            font-size: 40px;
+            border: none;
+            position: relative;
+        }
+        
+        .p.completed{
+            background-color: green;
+        }
+        
+        .p.completed::after {
+            content: "\2713";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 60px;
+            color: white;
+        }
+        
+        .butt{
+            display: flex;
+            justify-content: center;
+        }
+        .b{
+            border: none;
+            padding: 20px;
+            font-size: 50px;
+            margin: 10px;
+            background-color: black;
+            color: aliceblue;
+        }
+        .b:hover{
+            background-color: rgb(71, 69, 69);
+        }
+        h1{
+            text-align: center;
+        }
+        
+    </style>
+</head>
+<body>
+    <h1>Progress Tracker</h1>
+  <div class="container">
+    <div class="pages">
+        <button class="p" id="p1">1</button>
+        <button class="p" id="p2">2</button>
+        <button class="p" id="p3">3</button>
+        <button class="p" id="p4">4</button>
+        <button class="p" id="p5">5</button>
+    </div>
+    <div class="butt">
+        <button class="b" id="b1"><</button>
+        <button class="b" id="b2">></button>
+    </div>
+</div>
+<script>
+    let currentPage = 1;
+    let totalPages = 5;
+    let buttons = document.querySelectorAll('.p');
+    let nextButton = document.querySelector('#b2');
+    let prevButton = document.querySelector('#b1');
+
+    nextButton.addEventListener('click', () => {
+        if (currentPage < totalPages) {
+            currentPage++;
+            updatePage();
+        }
+    });
+
+    prevButton.addEventListener('click', () => {
+        if (currentPage > 1) {
+            currentPage--;
+            updatePage();
+        }
+    });
+
+    function updatePage() {
+        buttons.forEach(button => {
+            button.classList.remove('completed');
+            button.innerHTML = button.id.replace('p', '');
+        });
+        for (let i = 1; i <= currentPage; i++) {
+            let button = document.querySelector(`#p${i}`);
+            button.classList.add('completed');
+            button.innerHTML = '';
+        }
+    }
+
+    updatePage();
+</script>
+</body>
+</html>
